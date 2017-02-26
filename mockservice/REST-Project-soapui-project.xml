@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="31029626-f679-49df-b5f0-cd9bfd272708" activeEnvironment="Default" name="REST Project" soapui-version="5.3.0" abortOnError="false" runType="SEQUENTIAL" resourceRoot="" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:restMockService id="8d364d74-0e4e-48b4-8aec-9162599e87e9" port="10101" path="/abc/rest" host="localhost" name="REST MockService" docroot=""><con:settings/><con:properties/><con:restMockAction name="myRestResource" method="POST" resourcePath="/testservice/def" id="bc0ca520-a964-45a4-b637-df9234b87acd"><con:settings/><con:defaultResponse>Response</con:defaultResponse><con:dispatchStyle>SCRIPT</con:dispatchStyle><con:dispatchPath>// Match based on header
+def map = [ ]
+def authorization = mockRequest.getRequestHeaders().get("Authorization")
+def nameAndPass = authorization[0].split()[1]
+log.info nameAndPass
+nameAndPass = new String(nameAndPass.decodeBase64()).split(":")
+requestContext["name"] = nameAndPass[0]
+requestContext["pass"] = nameAndPass[1]
+return "Response"
+</con:dispatchPath><con:response name="Response" id="53d4c6e0-0109-4dfe-8f13-4e69998f5ca2" httpResponseStatus="200" mediaType="application/json"><con:settings/><con:responseContent>{
+	"response":{
+		"status":"ok",
+		"name":"${name}",
+		"pass":"${pass}"		
+	}
+
+}
+</con:responseContent></con:response></con:restMockAction></con:restMockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
